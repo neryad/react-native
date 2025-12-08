@@ -33,3 +33,5 @@ Thumbs.db
 .idea/
 .vscode/
 *.swp
+expo-push-notification-9c8ab-firebase-adminsdk-fbsvc-bba539c92f.json
+google-services.json
