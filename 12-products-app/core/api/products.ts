@@ -1,0 +1,21 @@
+import axios from 'axios';
+import { Platform } from 'react-native';
+
+
+//TODO: coenctar por envs vars android e ios
+
+const STAGE = process.env.EXPO_PUBLIC_STAGE || 'dev';
+
+export const API_URL = STAGE === 'prod' ? process.env.EXPO_PUBLIC_API_URL : (Platform.OS === 'ios' ? process.env.EXPO_PUBLIC_API_URL_IOS : process.env.EXPO_PUBLIC_API_URL_ANDROID);
+
+  console.log({STAGE, API_URL});
+const productsApi = axios.create({
+  baseURL: API_URL,
+  
+});
+
+
+//TODO: interceptores para manejar el token
+
+export { productsApi };
+
