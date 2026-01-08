@@ -1,6 +1,7 @@
 import { useColorScheme } from '@/presentation/theme/hooks/use-color-scheme.web';
 import { useThemeColor } from '@/presentation/theme/hooks/use-theme-color';
 import { DarkTheme, DefaultTheme, ThemeProvider, } from '@react-navigation/native';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
@@ -11,7 +12,13 @@ import 'react-native-reanimated';
 export const unstable_settings = {
   anchor: '(tabs)',
 };
-
+const queryClient = new QueryClient({
+  defaultOptions:{
+    queries:{
+     retry: false,
+    }
+  }
+})
 export default function RootLayout() {
    const [fontsLoaded, fontError] = useFonts({
     'Kanit-Regular': require('@/assets/fonts/Kanit-Regular.ttf'),
@@ -35,13 +42,18 @@ export default function RootLayout() {
   return (
    <GestureHandlerRootView style={{ flex: 1 , backgroundColor: backgroundColor }}>
 
-     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+    <QueryClientProvider client={queryClient}>
+
+
+         <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack screenOptions={{ headerShown: false }}>
-        {/* <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} /> */}
+     
       </Stack>
       <StatusBar style="auto" />
     </ThemeProvider>
+    </QueryClientProvider>
+
+  
    </GestureHandlerRootView>
   );
 }
